@@ -33,7 +33,7 @@ Recover file:
 Magic-Get  -File 'O:\MYBIGFILE.DATA' -Destination 'C:\' -Key "rJm0PP2KBhDoq87Q+hVqjwJt+NWguCRY1oLgRHmcSwY="
 ```
 
-### Generating Keys
+### Generating Key
 
 ```
 New-CryptographyKey -AsPlainText
