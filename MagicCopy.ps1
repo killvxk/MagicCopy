@@ -66,7 +66,7 @@ Param(
     }
 }
 
-Function Magic-Put([STRING] $File, [STRING] $Destination, [int] $NewSize = 10MB, [STRING] $Key, [int] $FirstPiece = 1, [int] $LastPiece = 10MB, [int] $Threads = 1){
+Function Magic-Put([STRING] $File, [STRING] $Destination, [int] $PieceSize = 10MB, [STRING] $Key, [int] $FirstPiece = 1, [int] $LastPiece = 10MB, [int] $Threads = 1){
     [ScriptBlock] $ScriptBlock = {
         param([Byte[]]$ENCBUFFER,[String]$path)
         try{
@@ -80,7 +80,7 @@ Function Magic-Put([STRING] $File, [STRING] $Destination, [int] $NewSize = 10MB,
         $ErrorActionPreference = "Stop"
         "Source: $File";
         "Destination: $Destination";
-        "Split Size: $Newsize";
+        "Split Size: $PieceSize";
         "Threads: $Threads";
         $Key2 = $Key | ConvertTo-SecureString -AsPlainText -Force;
         $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Key2)
@@ -94,7 +94,7 @@ Function Magic-Put([STRING] $File, [STRING] $Destination, [int] $NewSize = 10MB,
 	    if ($FILEPATH -ne "") { $FILEPATH = $FILEPATH + "\";}
 	    $FILENAME = [IO.Path]::GetFileNameWithoutExtension($Path);
 	    $EXTENSION  = [IO.Path]::GetExtension($Path);
-	    [Byte[]]$BUFFER = New-Object Byte[] $Newsize;
+	    [Byte[]]$BUFFER = New-Object Byte[] $PieceSize;
 	    [int]$BYTESREAD = 0;
 	    $NUMFILE = 1;
 	    while (($BYTESREAD = $FileStreamReader.Read($BUFFER, 0, $BUFFER.Length)) -gt 0){
